@@ -10,12 +10,12 @@ mongo = PyMongo(app)
 @app.route("/")
 def index():
     marspage = mongo.db.marspages.find_one()
-    return render_template("index.html", marspage=marspage)
+    return render_template("index.html", mars_data=marspage)
 
 @app.route("/scrape")
 def scraper():
     marspages = mongo.db.marspages
-    marspagedata = scrape_mars.scrape()
+    marspagedata = scrape_mars.scrape_all()
     marspages.update({}, marspagedata, upsert=True)
     return redirect("/", code=302)
 
